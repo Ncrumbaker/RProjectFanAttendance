@@ -4,27 +4,56 @@ author: "Nate Crumbaker"
 date: "3/8/2021"
 output: html_document
 ---
+##Packages
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, include=FALSE}
+require(xlsx)
+require(ggplot2)
+require(knitr)
+require(stargazer)
+require(UsingR)
 ```
 
-## R Markdown
+##Introduction
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Weather has always been seen as a determinant to go to a sports game such as the MLB
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r, include=FALSE}
+myfile1 <- "ATL2019Attendance.xlsx"
+myfile2 <- "ATL2019Weather.xlsx"
+ATL2019Attendancedata <- read.xlsx2(myfile1, sheetName="ATL2019Attendance")
+ATL2018Attendancedata <- read.xlsx2(myfile1, sheetName="ATL2018Attendance")
+ATL2018Weatherdata <- read.xlsx2(myfile2, sheetName="2018")
+ATL2019Weatherdata <- read.xlsx2(myfile2, sheetName="2019")
 
-```{r cars}
-summary(cars)
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+ATL2019 <- merge(ATL2019Weatherdata, ATL2019Attendancedata, by= "Date")
+ATL2018 <- merge(ATL2018Weatherdata, ATL2018Attendancedata, by= "Date")
+ATL <- rbind(ATL2019, ATL2018)
+names(ATL) <- c("Date", "MaxTemp", "AvgTemp", "MinTemp", "MaxDewPoint", "AvgDewPoint", "MinDewPoint", "MaxHumidty", "AvgHumidty", "MinHumidty", "MaxWindSpeed", "AvgWindSpeed", "MinWindSpeed", "TotalPrecipitation", "Game", "X", "Team", "Away", "Opp", "Attendance")
+ATLHome <- ATL[!(ATL$Away==1),]
+head(ATLHome)
+i <- c(2,3,4,5,6,7,8,9,10,11,12,13,14,20)
+ATLHome[ , i] <- apply(ATLHome[ , i], 2, function(x) as.numeric(as.character(x)))
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+AttendanceRegressionTemp <- lm(Attendance ~ MaxTemp + AvgTemp + MinTemp, data = ATLHome)
+summary(AttendanceRegressionTemp)
+AttendanceRegressionDew <- lm(Attendance ~ MaxDewPoint + AvgDewPoint + MinDewPoint, data = ATLHome)
+summary(AttendanceRegressionDew)
+AttendanceRegressionHumidty <- lm(Attendance ~ MaxHumidty + AvgHumidty + MinHumidty, data = ATLHome)
+summary(AttendanceRegressionHumidty)
+AttendanceRegressionWind <- lm(Attendance ~ MaxWindSpeed + AvgWindSpeed + MinWindSpeed, data = ATLHome)
+summary(AttendanceRegressionWind)
+AttendanceRegressionPrec <- lm(Attendance ~ TotalPrecipitation, data = ATLHome)
+summary(AttendanceRegressionPrec)
+```
+```{r}
+AttendanceRegressionTotal <- lm(Attendance ~ MaxTemp + AvgTemp + MinTemp + MaxDewPoint + AvgDewPoint + MinDewPoint + MaxHumidty + AvgHumidty + MinHumidty + MaxWindSpeed + AvgWindSpeed + MinWindSpeed + TotalPrecipitation, data = ATLHome)
+summary(AttendanceRegressionTotal)
+```
+```{r}
+Reg <- lm(Attendance ~ TotalPrecipitation, data = ATLHome)
+print(Reg)
+```
