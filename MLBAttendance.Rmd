@@ -27,7 +27,7 @@ ATL2018Weatherdata <- read.xlsx2(myfile2, sheetName="2018")
 ATL2019Weatherdata <- read.xlsx2(myfile2, sheetName="2019")
 
 ```
-```{r}
+```{r, include=FALSE}
 ATL2019 <- merge(ATL2019Weatherdata, ATL2019Attendancedata, by= "Date")
 ATL2018 <- merge(ATL2018Weatherdata, ATL2018Attendancedata, by= "Date")
 ATL <- rbind(ATL2019, ATL2018)
@@ -51,7 +51,9 @@ summary(AttendanceRegressionPrec)
 ```
 ```{r}
 AttendanceRegressionTotal <- lm(Attendance ~ MaxTemp + AvgTemp + MinTemp + MaxDewPoint + AvgDewPoint + MinDewPoint + MaxHumidty + AvgHumidty + MinHumidty + MaxWindSpeed + AvgWindSpeed + MinWindSpeed + TotalPrecipitation, data = ATLHome)
+AttendanceRegressionAvg <- lm(Attendance ~ AvgTemp + AvgDewPoint + AvgHumidty + AvgWindSpeed +TotalPrecipitation, data = ATLHome)
 summary(AttendanceRegressionTotal)
+summary(AttendanceRegressionAvg)
 ```
 ```{r}
 Reg <- lm(Attendance ~ TotalPrecipitation, data = ATLHome)

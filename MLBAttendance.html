@@ -198,35 +198,6 @@ summary {
 <p>##Packages</p>
 <p>##Introduction</p>
 <p>Weather has always been seen as a determinant to go to a sports game such as the MLB</p>
-<pre class="r"><code>ATL2019 &lt;- merge(ATL2019Weatherdata, ATL2019Attendancedata, by= &quot;Date&quot;)
-ATL2018 &lt;- merge(ATL2018Weatherdata, ATL2018Attendancedata, by= &quot;Date&quot;)
-ATL &lt;- rbind(ATL2019, ATL2018)
-names(ATL) &lt;- c(&quot;Date&quot;, &quot;MaxTemp&quot;, &quot;AvgTemp&quot;, &quot;MinTemp&quot;, &quot;MaxDewPoint&quot;, &quot;AvgDewPoint&quot;, &quot;MinDewPoint&quot;, &quot;MaxHumidty&quot;, &quot;AvgHumidty&quot;, &quot;MinHumidty&quot;, &quot;MaxWindSpeed&quot;, &quot;AvgWindSpeed&quot;, &quot;MinWindSpeed&quot;, &quot;TotalPrecipitation&quot;, &quot;Game&quot;, &quot;X&quot;, &quot;Team&quot;, &quot;Away&quot;, &quot;Opp&quot;, &quot;Attendance&quot;)
-ATLHome &lt;- ATL[!(ATL$Away==1),]
-head(ATLHome)</code></pre>
-<pre><code>##    Date MaxTemp AvgTemp MinTemp MaxDewPoint AvgDewPoint MinDewPoint MaxHumidty
-## 4 43555      68    52.9      43          55        40.7          25         89
-## 5 43556      61    49.5      38          26        23.1          21         55
-## 6 43557      63    53.5      46          35        29.3          23         53
-## 7 43558      72    59.1      45          36        32.1          25         68
-## 8 43559      70    61.1      50          54        42.3          35         87
-## 9 43560      76    64.3      56          59        56.1          53         93
-##   AvgHumidty MinHumidty MaxWindSpeed AvgWindSpeed MinWindSpeed
-## 4       65.5         38           23         16.3            9
-## 5       37.5         22           17           10            5
-## 6       40.2         31           13          9.3            3
-## 7       40.3         18            7          3.9            0
-## 8         52         33           15          6.3            0
-## 9       76.5         50           13          7.2            0
-##   TotalPrecipitation Game        X Team Away Opp Attendance
-## 4                0.1    4 boxscore  ATL    0 CHC      41912
-## 5                  0    5 boxscore  ATL    0 CHC      37398
-## 6                  0    6 boxscore  ATL    0 CHC      33815
-## 7                  0    7 boxscore  ATL    0 MIA      29218
-## 8                  0    8 boxscore  ATL    0 MIA      35618
-## 9               0.18    9 boxscore  ATL    0 MIA      32551</code></pre>
-<pre class="r"><code>i &lt;- c(2,3,4,5,6,7,8,9,10,11,12,13,14,20)
-ATLHome[ , i] &lt;- apply(ATLHome[ , i], 2, function(x) as.numeric(as.character(x)))</code></pre>
 <pre class="r"><code>AttendanceRegressionTemp &lt;- lm(Attendance ~ MaxTemp + AvgTemp + MinTemp, data = ATLHome)
 summary(AttendanceRegressionTemp)</code></pre>
 <pre><code>## 
