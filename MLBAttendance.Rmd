@@ -4,58 +4,50 @@ author: "Nate Crumbaker"
 date: "3/8/2021"
 output: html_document
 ---
-##Packages
+## Packages
 
-```{r, include=FALSE}
+```{r}
 require(xlsx)
 require(ggplot2)
 require(knitr)
-require(stargazer)
 require(UsingR)
+require(dplyr)
+require(stargazer)
 ```
 
-##Introduction
+## Introduction
 
-Weather has always been seen as a determinant to go to a sports game such as the MLB
+Weather has always been seen as a determinant to attendance of a sports game such as the MLB. Logically it makes sense to believe that line of thinking because who would want to go and sit through a game while it is raining. However this study aims to address the that line of thinking and see if it is actually backed by empirical data and evidence. This study will utilize multiple linear regression analysis to test select factors commonly believed to affect on weather to see if they statistically support the claims.
 
-```{r, include=FALSE}
+## Data
+The Data that we will be using to test this hypothesis will be the Atlanta Braves Home games attendance from 2017 to 2019 seasons in the Truist Park baseball field. First we import the attendance data from Sports Reference, Next we import the weather data from Wunderground.
+
+```{r}
 myfile1 <- "ATL2019Attendance.xlsx"
 myfile2 <- "ATL2019Weather.xlsx"
 ATL2019Attendancedata <- read.xlsx2(myfile1, sheetName="ATL2019Attendance")
 ATL2018Attendancedata <- read.xlsx2(myfile1, sheetName="ATL2018Attendance")
+ATL2017Attendancedata <- read.xlsx2(myfile1, sheetName="ATL2017Attendance")
+ATL2017Weatherdata <- read.xlsx2(myfile2, sheetName="2017")
 ATL2018Weatherdata <- read.xlsx2(myfile2, sheetName="2018")
 ATL2019Weatherdata <- read.xlsx2(myfile2, sheetName="2019")
 
-```
-```{r, include=FALSE}
 ATL2019 <- merge(ATL2019Weatherdata, ATL2019Attendancedata, by= "Date")
 ATL2018 <- merge(ATL2018Weatherdata, ATL2018Attendancedata, by= "Date")
-ATL <- rbind(ATL2019, ATL2018)
+ATL2017 <- merge(ATL2017Weatherdata, ATL2017Attendancedata, by= "Date")
+ATL <- rbind(ATL2019, ATL2018, ATL2017)
 names(ATL) <- c("Date", "MaxTemp", "AvgTemp", "MinTemp", "MaxDewPoint", "AvgDewPoint", "MinDewPoint", "MaxHumidty", "AvgHumidty", "MinHumidty", "MaxWindSpeed", "AvgWindSpeed", "MinWindSpeed", "TotalPrecipitation", "Game", "X", "Team", "Away", "Opp", "Attendance")
 ATLHome <- ATL[!(ATL$Away==1),]
-head(ATLHome)
 i <- c(2,3,4,5,6,7,8,9,10,11,12,13,14,20)
 ATLHome[ , i] <- apply(ATLHome[ , i], 2, function(x) as.numeric(as.character(x)))
 ```
-```{r}
-AttendanceRegressionTemp <- lm(Attendance ~ MaxTemp + AvgTemp + MinTemp, data = ATLHome)
-summary(AttendanceRegressionTemp)
-AttendanceRegressionDew <- lm(Attendance ~ MaxDewPoint + AvgDewPoint + MinDewPoint, data = ATLHome)
-summary(AttendanceRegressionDew)
-AttendanceRegressionHumidty <- lm(Attendance ~ MaxHumidty + AvgHumidty + MinHumidty, data = ATLHome)
-summary(AttendanceRegressionHumidty)
-AttendanceRegressionWind <- lm(Attendance ~ MaxWindSpeed + AvgWindSpeed + MinWindSpeed, data = ATLHome)
-summary(AttendanceRegressionWind)
-AttendanceRegressionPrec <- lm(Attendance ~ TotalPrecipitation, data = ATLHome)
-summary(AttendanceRegressionPrec)
+```{r, results='asis'}
+stargazer(ATLHome, type = 'html')
 ```
 ```{r}
-AttendanceRegressionTotal <- lm(Attendance ~ MaxTemp + AvgTemp + MinTemp + MaxDewPoint + AvgDewPoint + MinDewPoint + MaxHumidty + AvgHumidty + MinHumidty + MaxWindSpeed + AvgWindSpeed + MinWindSpeed + TotalPrecipitation, data = ATLHome)
-AttendanceRegressionAvg <- lm(Attendance ~ AvgTemp + AvgDewPoint + AvgHumidty + AvgWindSpeed +TotalPrecipitation, data = ATLHome)
+AttendanceRegressionTotal <- lm(Attendance ~ MaxTemp + AvgTemp + MinTemp + 
+MaxDewPoint + AvgDewPoint + MinDewPoint + 
+MaxHumidty + AvgHumidty + MinHumidty + 
+MaxWindSpeed + AvgWindSpeed + MinWindSpeed + TotalPrecipitation, data = ATLHome)
 summary(AttendanceRegressionTotal)
-summary(AttendanceRegressionAvg)
-```
-```{r}
-Reg <- lm(Attendance ~ TotalPrecipitation, data = ATLHome)
-print(Reg)
 ```

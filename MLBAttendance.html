@@ -195,120 +195,484 @@ summary {
 </div>
 
 
-<p>##Packages</p>
-<p>##Introduction</p>
-<p>Weather has always been seen as a determinant to go to a sports game such as the MLB</p>
-<pre class="r"><code>AttendanceRegressionTemp &lt;- lm(Attendance ~ MaxTemp + AvgTemp + MinTemp, data = ATLHome)
-summary(AttendanceRegressionTemp)</code></pre>
+<div id="packages" class="section level2">
+<h2>Packages</h2>
+<pre class="r"><code>require(xlsx)</code></pre>
+<pre><code>## Loading required package: xlsx</code></pre>
+<pre class="r"><code>require(ggplot2)</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre class="r"><code>require(knitr)</code></pre>
+<pre><code>## Loading required package: knitr</code></pre>
+<pre class="r"><code>require(UsingR)</code></pre>
+<pre><code>## Loading required package: UsingR</code></pre>
+<pre><code>## Loading required package: MASS</code></pre>
+<pre><code>## Loading required package: HistData</code></pre>
+<pre><code>## Loading required package: Hmisc</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
+<pre><code>## Loading required package: Formula</code></pre>
 <pre><code>## 
-## Call:
-## lm(formula = Attendance ~ MaxTemp + AvgTemp + MinTemp, data = ATLHome)
+## Attaching package: &#39;Hmisc&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -16295  -6703   1349   6393  11520 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 32606.13    6503.75   5.013 1.42e-06 ***
-## MaxTemp        83.33     308.62   0.270    0.788    
-## AvgTemp      -194.28     483.62  -0.402    0.688    
-## MinTemp       106.40     237.89   0.447    0.655    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 7433 on 158 degrees of freedom
-## Multiple R-squared:  0.00129,    Adjusted R-squared:  -0.01767 
-## F-statistic: 0.06804 on 3 and 158 DF,  p-value: 0.9768</code></pre>
-<pre class="r"><code>AttendanceRegressionDew &lt;- lm(Attendance ~ MaxDewPoint + AvgDewPoint + MinDewPoint, data = ATLHome)
-summary(AttendanceRegressionDew)</code></pre>
+##     format.pval, units</code></pre>
 <pre><code>## 
-## Call:
-## lm(formula = Attendance ~ MaxDewPoint + AvgDewPoint + MinDewPoint, 
-##     data = ATLHome)
+## Attaching package: &#39;UsingR&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:survival&#39;:
 ## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -16584  -6196   1179   6302  12604 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  31781.5     4988.2   6.371 1.96e-09 ***
-## MaxDewPoint    631.9      404.6   1.562   0.1204    
-## AvgDewPoint  -1186.7      622.5  -1.906   0.0584 .  
-## MinDewPoint    560.6      294.0   1.907   0.0584 .  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 7349 on 158 degrees of freedom
-## Multiple R-squared:  0.02373,    Adjusted R-squared:  0.005189 
-## F-statistic:  1.28 on 3 and 158 DF,  p-value: 0.2832</code></pre>
-<pre class="r"><code>AttendanceRegressionHumidty &lt;- lm(Attendance ~ MaxHumidty + AvgHumidty + MinHumidty, data = ATLHome)
-summary(AttendanceRegressionHumidty)</code></pre>
+##     cancer</code></pre>
+<pre class="r"><code>require(dplyr)</code></pre>
+<pre><code>## Loading required package: dplyr</code></pre>
 <pre><code>## 
-## Call:
-## lm(formula = Attendance ~ MaxHumidty + AvgHumidty + MinHumidty, 
-##     data = ATLHome)
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:Hmisc&#39;:
 ## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -16103  -6226   1255   6343  11509 
+##     src, summarize</code></pre>
+<pre><code>## The following object is masked from &#39;package:MASS&#39;:
 ## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  31582.3     6053.3   5.217 5.62e-07 ***
-## MaxHumidty     119.1      160.5   0.742    0.459    
-## AvgHumidty    -293.8      235.7  -1.246    0.214    
-## MinHumidty     218.0      153.8   1.418    0.158    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+##     select</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
 ## 
-## Residual standard error: 7389 on 158 degrees of freedom
-## Multiple R-squared:  0.01304,    Adjusted R-squared:  -0.005696 
-## F-statistic: 0.6961 on 3 and 158 DF,  p-value: 0.5558</code></pre>
-<pre class="r"><code>AttendanceRegressionWind &lt;- lm(Attendance ~ MaxWindSpeed + AvgWindSpeed + MinWindSpeed, data = ATLHome)
-summary(AttendanceRegressionWind)</code></pre>
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>require(stargazer)</code></pre>
+<pre><code>## Loading required package: stargazer</code></pre>
 <pre><code>## 
-## Call:
-## lm(formula = Attendance ~ MaxWindSpeed + AvgWindSpeed + MinWindSpeed, 
-##     data = ATLHome)
-## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -15233  -6302   1319   6065  12045 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   32293.9     2379.2  13.573   &lt;2e-16 ***
-## MaxWindSpeed    144.7      137.7   1.051    0.295    
-## AvgWindSpeed   -423.0      487.0  -0.869    0.386    
-## MinWindSpeed    631.8      408.5   1.546    0.124    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 7359 on 158 degrees of freedom
-## Multiple R-squared:  0.02107,    Adjusted R-squared:  0.00248 
-## F-statistic: 1.133 on 3 and 158 DF,  p-value: 0.3374</code></pre>
-<pre class="r"><code>AttendanceRegressionPrec &lt;- lm(Attendance ~ TotalPrecipitation, data = ATLHome)
-summary(AttendanceRegressionPrec)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = Attendance ~ TotalPrecipitation, data = ATLHome)
-## 
-## Residuals:
-##    Min     1Q Median     3Q    Max 
-## -16075  -6791   1406   6499  11403 
-## 
-## Coefficients:
-##                    Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)         32215.7      623.1  51.705   &lt;2e-16 ***
-## TotalPrecipitation   -367.6     1632.8  -0.225    0.822    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 7390 on 160 degrees of freedom
-## Multiple R-squared:  0.0003167,  Adjusted R-squared:  -0.005931 
-## F-statistic: 0.05069 on 1 and 160 DF,  p-value: 0.8221</code></pre>
+## Please cite as:</code></pre>
+<pre><code>##  Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.</code></pre>
+<pre><code>##  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer</code></pre>
+</div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Weather has always been seen as a determinant to attendance of a sports game such as the MLB. Logically it makes sense to believe that line of thinking because who would want to go and sit through a game while it is raining. However this study aims to address the that line of thinking and see if it is actually backed by empirical data and evidence. This study will utilize multiple linear regression analysis to test select factors commonly believed to affect on weather to see if they statistically support the claims.</p>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<p>The Data that we will be using to test this hypothesis will be the Atlanta Braves Home games attendance from 2017 to 2019 seasons in the Truist Park baseball field. First we import the attendance data from Sports Reference, Next we import the weather data from Wunderground.</p>
+<pre class="r"><code>myfile1 &lt;- &quot;ATL2019Attendance.xlsx&quot;
+myfile2 &lt;- &quot;ATL2019Weather.xlsx&quot;
+ATL2019Attendancedata &lt;- read.xlsx2(myfile1, sheetName=&quot;ATL2019Attendance&quot;)
+ATL2018Attendancedata &lt;- read.xlsx2(myfile1, sheetName=&quot;ATL2018Attendance&quot;)
+ATL2017Attendancedata &lt;- read.xlsx2(myfile1, sheetName=&quot;ATL2017Attendance&quot;)
+ATL2017Weatherdata &lt;- read.xlsx2(myfile2, sheetName=&quot;2017&quot;)
+ATL2018Weatherdata &lt;- read.xlsx2(myfile2, sheetName=&quot;2018&quot;)
+ATL2019Weatherdata &lt;- read.xlsx2(myfile2, sheetName=&quot;2019&quot;)
+
+ATL2019 &lt;- merge(ATL2019Weatherdata, ATL2019Attendancedata, by= &quot;Date&quot;)
+ATL2018 &lt;- merge(ATL2018Weatherdata, ATL2018Attendancedata, by= &quot;Date&quot;)
+ATL2017 &lt;- merge(ATL2017Weatherdata, ATL2017Attendancedata, by= &quot;Date&quot;)
+ATL &lt;- rbind(ATL2019, ATL2018, ATL2017)
+names(ATL) &lt;- c(&quot;Date&quot;, &quot;MaxTemp&quot;, &quot;AvgTemp&quot;, &quot;MinTemp&quot;, &quot;MaxDewPoint&quot;, &quot;AvgDewPoint&quot;, &quot;MinDewPoint&quot;, &quot;MaxHumidty&quot;, &quot;AvgHumidty&quot;, &quot;MinHumidty&quot;, &quot;MaxWindSpeed&quot;, &quot;AvgWindSpeed&quot;, &quot;MinWindSpeed&quot;, &quot;TotalPrecipitation&quot;, &quot;Game&quot;, &quot;X&quot;, &quot;Team&quot;, &quot;Away&quot;, &quot;Opp&quot;, &quot;Attendance&quot;)
+ATLHome &lt;- ATL[!(ATL$Away==1),]
+i &lt;- c(2,3,4,5,6,7,8,9,10,11,12,13,14,20)
+ATLHome[ , i] &lt;- apply(ATLHome[ , i], 2, function(x) as.numeric(as.character(x)))</code></pre>
+<pre class="r"><code>stargazer(ATLHome, type = &#39;html&#39;)</code></pre>
+<table style="text-align:center">
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Statistic
+</td>
+<td>
+N
+</td>
+<td>
+Mean
+</td>
+<td>
+St. Dev.
+</td>
+<td>
+Min
+</td>
+<td>
+Pctl(25)
+</td>
+<td>
+Pctl(75)
+</td>
+<td>
+Max
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+MaxTemp
+</td>
+<td>
+243
+</td>
+<td>
+84.634
+</td>
+<td>
+7.313
+</td>
+<td>
+53
+</td>
+<td>
+80
+</td>
+<td>
+90
+</td>
+<td>
+99
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+AvgTemp
+</td>
+<td>
+243
+</td>
+<td>
+75.392
+</td>
+<td>
+7.040
+</td>
+<td>
+43.100
+</td>
+<td>
+72.250
+</td>
+<td>
+80.100
+</td>
+<td>
+87.500
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+MinTemp
+</td>
+<td>
+243
+</td>
+<td>
+67.416
+</td>
+<td>
+7.863
+</td>
+<td>
+36
+</td>
+<td>
+65
+</td>
+<td>
+72
+</td>
+<td>
+78
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+MaxDewPoint
+</td>
+<td>
+243
+</td>
+<td>
+66.593
+</td>
+<td>
+8.039
+</td>
+<td>
+26
+</td>
+<td>
+64
+</td>
+<td>
+72
+</td>
+<td>
+76
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+AvgDewPoint
+</td>
+<td>
+243
+</td>
+<td>
+62.935
+</td>
+<td>
+8.959
+</td>
+<td>
+23.100
+</td>
+<td>
+59.550
+</td>
+<td>
+69.150
+</td>
+<td>
+73.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+MinDewPoint
+</td>
+<td>
+243
+</td>
+<td>
+58.802
+</td>
+<td>
+10.459
+</td>
+<td>
+21
+</td>
+<td>
+54.5
+</td>
+<td>
+67
+</td>
+<td>
+71
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+MaxHumidty
+</td>
+<td>
+243
+</td>
+<td>
+86.733
+</td>
+<td>
+8.870
+</td>
+<td>
+55
+</td>
+<td>
+82
+</td>
+<td>
+93
+</td>
+<td>
+100
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+AvgHumidty
+</td>
+<td>
+243
+</td>
+<td>
+67.824
+</td>
+<td>
+11.953
+</td>
+<td>
+37.500
+</td>
+<td>
+58.800
+</td>
+<td>
+76.950
+</td>
+<td>
+96.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+MinHumidty
+</td>
+<td>
+243
+</td>
+<td>
+46.539
+</td>
+<td>
+12.815
+</td>
+<td>
+17
+</td>
+<td>
+38
+</td>
+<td>
+54
+</td>
+<td>
+84
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+MaxWindSpeed
+</td>
+<td>
+243
+</td>
+<td>
+14.551
+</td>
+<td>
+5.176
+</td>
+<td>
+6
+</td>
+<td>
+12
+</td>
+<td>
+16
+</td>
+<td>
+40
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+AvgWindSpeed
+</td>
+<td>
+243
+</td>
+<td>
+7.429
+</td>
+<td>
+2.622
+</td>
+<td>
+2
+</td>
+<td>
+5.6
+</td>
+<td>
+8.7
+</td>
+<td>
+20
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+MinWindSpeed
+</td>
+<td>
+243
+</td>
+<td>
+1.749
+</td>
+<td>
+2.638
+</td>
+<td>
+0
+</td>
+<td>
+0
+</td>
+<td>
+3
+</td>
+<td>
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+TotalPrecipitation
+</td>
+<td>
+243
+</td>
+<td>
+0.142
+</td>
+<td>
+0.379
+</td>
+<td>
+0
+</td>
+<td>
+0
+</td>
+<td>
+0.1
+</td>
+<td>
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Attendance
+</td>
+<td>
+243
+</td>
+<td>
+31,752.890
+</td>
+<td>
+7,177.981
+</td>
+<td>
+16,049
+</td>
+<td>
+25,145
+</td>
+<td>
+37,871
+</td>
+<td>
+43,619
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
 <pre class="r"><code>AttendanceRegressionTotal &lt;- lm(Attendance ~ MaxTemp + AvgTemp + MinTemp + MaxDewPoint + AvgDewPoint + MinDewPoint + MaxHumidty + AvgHumidty + MinHumidty + MaxWindSpeed + AvgWindSpeed + MinWindSpeed + TotalPrecipitation, data = ATLHome)
 summary(AttendanceRegressionTotal)</code></pre>
 <pre><code>## 
@@ -320,39 +684,31 @@ summary(AttendanceRegressionTotal)</code></pre>
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -16076.5  -6152.6    892.3   5855.6  13118.4 
+## -16173.9  -5988.9    257.5   6331.7  14441.1 
 ## 
 ## Coefficients:
-##                     Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)        -23359.59   54296.59  -0.430   0.6677  
-## MaxTemp               535.45     468.84   1.142   0.2553  
-## AvgTemp               295.93    1431.74   0.207   0.8365  
-## MinTemp               342.45     381.75   0.897   0.3711  
-## MaxDewPoint           385.57     458.53   0.841   0.4018  
-## AvgDewPoint         -1870.34    1528.53  -1.224   0.2230  
-## MinDewPoint           353.35     357.90   0.987   0.3251  
-## MaxHumidty            197.77     184.69   1.071   0.2860  
-## AvgHumidty            -24.71     650.79  -0.038   0.9698  
-## MinHumidty            414.03     227.14   1.823   0.0704 .
-## MaxWindSpeed           48.46     161.19   0.301   0.7641  
-## AvgWindSpeed          -22.89     569.58  -0.040   0.9680  
-## MinWindSpeed          591.89     428.19   1.382   0.1690  
-## TotalPrecipitation   -709.05    2016.66  -0.352   0.7256  
+##                    Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)        32592.08   36474.34   0.894   0.3725  
+## MaxTemp              136.23     349.42   0.390   0.6970  
+## AvgTemp             -706.55    1022.53  -0.691   0.4903  
+## MinTemp              863.37     337.70   2.557   0.0112 *
+## MaxDewPoint          384.04     351.17   1.094   0.2753  
+## AvgDewPoint        -1055.51     988.06  -1.068   0.2865  
+## MinDewPoint          452.19     254.14   1.779   0.0765 .
+## MaxHumidty           -15.16     147.74  -0.103   0.9183  
+## AvgHumidty           121.00     419.47   0.288   0.7732  
+## MinHumidty          -215.49     150.37  -1.433   0.1532  
+## MaxWindSpeed          86.41     132.27   0.653   0.5142  
+## AvgWindSpeed        -172.67     422.45  -0.409   0.6831  
+## MinWindSpeed         215.45     328.39   0.656   0.5124  
+## TotalPrecipitation -1804.28    1386.99  -1.301   0.1946  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 7416 on 148 degrees of freedom
-## Multiple R-squared:  0.06879,    Adjusted R-squared:  -0.01301 
-## F-statistic: 0.841 on 13 and 148 DF,  p-value: 0.6163</code></pre>
-<pre class="r"><code>Reg &lt;- lm(Attendance ~ TotalPrecipitation, data = ATLHome)
-print(Reg)</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = Attendance ~ TotalPrecipitation, data = ATLHome)
-## 
-## Coefficients:
-##        (Intercept)  TotalPrecipitation  
-##            32215.7              -367.6</code></pre>
+## Residual standard error: 7002 on 229 degrees of freedom
+## Multiple R-squared:  0.09955,    Adjusted R-squared:  0.04844 
+## F-statistic: 1.948 on 13 and 229 DF,  p-value: 0.02618</code></pre>
+</div>
 
 
 
