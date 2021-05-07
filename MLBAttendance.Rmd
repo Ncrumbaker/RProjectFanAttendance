@@ -13,13 +13,27 @@ require(knitr)
 require(UsingR)
 require(dplyr)
 require(stargazer)
+require(car)
 ```
+
+## Abstract
+
+The problem that this project seeks to address is whether weather factors have an affect on attendance to Major League Baseball games. It is important to determine this because the MLB relies heavily on attendance. Other researchers have already conclude that some factors due have affect on however we will expand on those factors (Ge, 2020). Our data comes from the websites Baseball Reference and Wunderground. This project concluded that we were unable to determine that weather has a significant affect on attendance and we recommend that more research is done into the area.
 
 ## Introduction
 
-Weather has always been seen as a determinant to attendance of a sports game such as the MLB. Logically it makes sense to believe that line of thinking because who would want to go and sit through a game while it is raining. However this study aims to address the that line of thinking and see if it is actually backed by empirical data and evidence. This study will utilize multiple linear regression analysis to test select factors commonly believed to affect on weather to see if they statistically support the claims.
+Weather has always been seen as a determinant to attendance of a sports game such as the Major League Baseball. Logically it makes sense to believe that line of thinking because who would want to go and sit through a game while it is raining. However this study aims to address the that line of thinking and see if it is actually backed by empirical data and evidence. This study will utilize multiple linear regression analysis to test select factors commonly believed to affect on weather to see if they statistically support the claims.
+
+## Literature Review
+
+The Major League Baseball(MLB) is a professional sports league located in North America that plays baseball games through out the months of April to October. Naturally we a lot of games being played outside it can be believed that weather might have an effect on attendance. Attendance is an important factor for the MLB because attendance will help determine ticket prices and whether to relocate teams to a different city. Due to the importance of attendance in the MLB there is already some studies done in this field. Qi Ge ran a study in which he found factors such as average temperature and precipitation due have an affect on attendance (Ge, 2020). This study seeks to expand on that idea by adding in more weather factors such as Wind Speed, Dew Point and Humidity.
+
+## Theory
+
+For this project our Hypothesis that this study seeks to answer is that Weather does have a signifigicant affect on determing Attendance.
 
 ## Data
+
 The Data that we will be using to test this hypothesis will be the Atlanta Braves Home games attendance from 2017 to 2019 seasons in the Truist Park baseball field. First we import the attendance data from Sports Reference, Next we import the weather data from Wunderground.
 
 ```{r}
@@ -31,23 +45,70 @@ ATL2017Attendancedata <- read.xlsx2(myfile1, sheetName="ATL2017Attendance")
 ATL2017Weatherdata <- read.xlsx2(myfile2, sheetName="2017")
 ATL2018Weatherdata <- read.xlsx2(myfile2, sheetName="2018")
 ATL2019Weatherdata <- read.xlsx2(myfile2, sheetName="2019")
-
+```
+After importing the data from excel files next we will merge the Weather Data and Attendance data in the yearly data. Following that we then merge all the yearly data into a the total data. Finally we then remove all none home games due to those games being the ones not located in Atlanta
+```{r}
 ATL2019 <- merge(ATL2019Weatherdata, ATL2019Attendancedata, by= "Date")
 ATL2018 <- merge(ATL2018Weatherdata, ATL2018Attendancedata, by= "Date")
 ATL2017 <- merge(ATL2017Weatherdata, ATL2017Attendancedata, by= "Date")
 ATL <- rbind(ATL2019, ATL2018, ATL2017)
-names(ATL) <- c("Date", "MaxTemp", "AvgTemp", "MinTemp", "MaxDewPoint", "AvgDewPoint", "MinDewPoint", "MaxHumidty", "AvgHumidty", "MinHumidty", "MaxWindSpeed", "AvgWindSpeed", "MinWindSpeed", "TotalPrecipitation", "Game", "X", "Team", "Away", "Opp", "Attendance")
+names(ATL) <- c("Date", "MaxTemp", "AvgTemp", "MinTemp", "MaxDewPoint", "AvgDewPoint", "MinDewPoint", "MaxHumidity", "AvgHumidity", "MinHumidity", "MaxWindSpeed", "AvgWindSpeed", "MinWindSpeed", "TotalPrecipitation", "Game", "X", "Team", "Away", "Opp", "Attendance")
 ATLHome <- ATL[!(ATL$Away==1),]
 i <- c(2,3,4,5,6,7,8,9,10,11,12,13,14,20)
 ATLHome[ , i] <- apply(ATLHome[ , i], 2, function(x) as.numeric(as.character(x)))
 ```
+After all the data cleaning is done here is what the data set currently looks like
 ```{r, results='asis'}
 stargazer(ATLHome, type = 'html')
 ```
+
+## Methodology
+
+Now that the data is cleaned we can begin the linear regression analysis in this project. First we create a linear regression model using the lm function which contains all the variables we will be using in the model for testing. Then we use the vif function to check for multicollinearity using the vif function from the car package. Our goal is to get every variable to have less than a value of 10.
 ```{r}
-AttendanceRegressionTotal <- lm(Attendance ~ MaxTemp + AvgTemp + MinTemp + 
+AttendanceRegression <- lm(Attendance ~ MaxTemp + AvgTemp + MinTemp + 
 MaxDewPoint + AvgDewPoint + MinDewPoint + 
-MaxHumidty + AvgHumidty + MinHumidty + 
+MaxHumidity + AvgHumidity + MinHumidity + 
 MaxWindSpeed + AvgWindSpeed + MinWindSpeed + TotalPrecipitation, data = ATLHome)
-summary(AttendanceRegressionTotal)
+vif(AttendanceRegression)
 ```
+Now we remove the variables will a high multicollinearity due to the interconnectedness between the variables. For the first round of removal we will be removing AvgTemp AvgDewPoint and AvgHumidity
+```{r}
+AttendanceRegression <- lm(Attendance ~ MaxTemp + MinTemp + MaxDewPoint + MinDewPoint + MaxHumidity + MinHumidity + MaxWindSpeed + AvgWindSpeed + MinWindSpeed + TotalPrecipitation, data = ATLHome)
+vif(AttendanceRegression)
+```
+Next we remove the variable with the highest value still left which is MinDewPoint
+```{r}
+AttendanceRegression <- lm(Attendance ~ MaxTemp + MinTemp + MaxDewPoint + MaxHumidity + MinHumidity + MaxWindSpeed + AvgWindSpeed + MinWindSpeed + TotalPrecipitation, data = ATLHome)
+vif(AttendanceRegression)
+```
+Finally we remove MaxDewPoint which has a value still above 10
+```{r}
+AttendanceRegression <- lm(Attendance ~ MaxTemp + MinTemp + MaxHumidity + MinHumidity + MaxWindSpeed + AvgWindSpeed + MinWindSpeed + TotalPrecipitation, data = ATLHome)
+vif(AttendanceRegression)
+```
+Now that every variable has a value less than 10 we are able to continue to view the results of the regression analysis
+
+## Results
+
+Down below is the results of the linear regression analysis
+```{r}
+summary(AttendanceRegression)
+```
+
+The first thing to look at is the Multiple R-Squared which is just 0.063 which means that the weather variables explains only 6.3% of the variance in attendance. Next is we look at the two variables that are significant on the 0.01 level which is MinTemp which means that for every 1 degree Fahrenheit increase of minimum temperature the amount of people attending will increase by 382 people. Another significant variable is MinHumidity which means for every 1% increase in the Humidity level the amount of people in attendance will decrease by 158. There are a lot of non-significant results in this model however that does not mean that the factors do or do not affect attendance it simply means that the model could not conclude that the factors have an affect on weather.
+
+## Implications
+
+The implications of this project means that more research will be needed to conclude if weather does have an affect attendance due to the high amount of non significant results and the low multiple R-Squared.
+
+## Conclusions
+
+The conclusion from this research project is that we were unable to determine whether weather has a significant affect on attendance towards MLB games. The two variables MinTemp and MinHumidity however did seem to have a significant affect on attendance while the Model as a whole did not.
+
+## References
+Atlanta, GA Weather History | Weather Underground. Wunderground.com. (2021). https://www.wunderground.com/history/monthly/KATL/date/2019-4.
+
+2019 Atlanta Braves Schedule. Baseball Reference. (2021). https://www.baseball-reference.com/teams/ATL/2019-schedule-scores.shtml. 
+
+Ge, Q., Humphreys, B. R., & Zhou, K. (2020). Are fair weather fans affected by weather? Rainfall, habit formation, and live game attendance. Journal of Sports Economics, 21(3), 304-322.
