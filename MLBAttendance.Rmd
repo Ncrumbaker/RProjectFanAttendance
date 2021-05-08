@@ -2,7 +2,7 @@
 title: "MLBAttendance"
 author: "Nate Crumbaker"
 date: "3/8/2021"
-output: html_document
+output: word_document
 ---
 ## Packages
 

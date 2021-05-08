@@ -1,0 +1,804 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={MLBAttendance},
+  pdfauthor={Nate Crumbaker},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{MLBAttendance}
+\author{Nate Crumbaker}
+\date{3/8/2021}
+
+\begin{document}
+\maketitle
+
+\hypertarget{packages}{%
+\subsection{Packages}\label{packages}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(xlsx)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: xlsx
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(knitr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: knitr
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(UsingR)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: UsingR
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: MASS
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: HistData
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: Hmisc
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: survival
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: Formula
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'Hmisc'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     format.pval, units
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'UsingR'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:survival':
+## 
+##     cancer
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: dplyr
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:Hmisc':
+## 
+##     src, summarize
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:MASS':
+## 
+##     select
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(stargazer)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: stargazer
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Please cite as:
+\end{verbatim}
+
+\begin{verbatim}
+##  Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.
+\end{verbatim}
+
+\begin{verbatim}
+##  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(car)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: car
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'car' was built under R version 4.0.5
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: carData
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'car'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     recode
+\end{verbatim}
+
+\hypertarget{abstract}{%
+\subsection{Abstract}\label{abstract}}
+
+\textless\textless\textless\textless\textless\textless\textless{} HEAD
+The problem that this project seeks to address is whether weather
+factors have an affect on attendance to Major League Baseball games. It
+is important to determine this because the MLB relies heavily on
+attendance. Other researchers have already conclude that some factors
+due have affect on however we will expand on those factors (Ge, 2020).
+Our data comes from the websites Baseball Reference and Wunderground.
+This project concluded that we were unable to determine that weather has
+a significant affect on attendance and we recommend that more research
+is done into the area.
+
+\hypertarget{introduction}{%
+\subsection{Introduction}\label{introduction}}
+
+Weather has always been seen as a determinant to attendance of a sports
+game such as the Major League Baseball. Logically it makes sense to
+believe that line of thinking because who would want to go and sit
+through a game while it is raining. However this study aims to address
+the that line of thinking and see if it is actually backed by empirical
+data and evidence. This study will utilize multiple linear regression
+analysis to test select factors commonly believed to affect on weather
+to see if they statistically support the claims.
+
+\hypertarget{literature-review}{%
+\subsection{Literature Review}\label{literature-review}}
+
+The Major League Baseball(MLB) is a professional sports league located
+in North America that plays baseball games through out the months of
+April to October. Naturally we a lot of games being played outside it
+can be believed that weather might have an effect on attendance.
+Attendance is an important factor for the MLB because attendance will
+help determine ticket prices and whether to relocate teams to a
+different city. Due to the importance of attendance in the MLB there is
+already some studies done in this field. Qi Ge ran a study in which he
+found factors such as average temperature and precipitation due have an
+affect on attendance (Ge, 2020). This study seeks to expand on that idea
+by adding in more weather factors such as Wind Speed, Dew Point and
+Humidity.
+
+\hypertarget{theory}{%
+\subsection{Theory}\label{theory}}
+
+For this project our Hypothesis that this study seeks to answer is that
+Weather does have a signifigicant affect on determing Attendance.
+
+\hypertarget{data}{%
+\subsection{Data}\label{data}}
+
+The Data that we will be using to test this hypothesis will be the
+Atlanta Braves Home games attendance from 2017 to 2019 seasons in the
+Truist Park baseball field. First we import the attendance data from
+Sports Reference, Next we import the weather data from Wunderground.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myfile1 }\OtherTok{\textless{}{-}} \StringTok{"ATL2019Attendance.xlsx"}
+\NormalTok{myfile2 }\OtherTok{\textless{}{-}} \StringTok{"ATL2019Weather.xlsx"}
+\NormalTok{ATL2019Attendancedata }\OtherTok{\textless{}{-}} \FunctionTok{read.xlsx2}\NormalTok{(myfile1, }\AttributeTok{sheetName=}\StringTok{"ATL2019Attendance"}\NormalTok{)}
+\NormalTok{ATL2018Attendancedata }\OtherTok{\textless{}{-}} \FunctionTok{read.xlsx2}\NormalTok{(myfile1, }\AttributeTok{sheetName=}\StringTok{"ATL2018Attendance"}\NormalTok{)}
+\NormalTok{ATL2017Attendancedata }\OtherTok{\textless{}{-}} \FunctionTok{read.xlsx2}\NormalTok{(myfile1, }\AttributeTok{sheetName=}\StringTok{"ATL2017Attendance"}\NormalTok{)}
+\NormalTok{ATL2017Weatherdata }\OtherTok{\textless{}{-}} \FunctionTok{read.xlsx2}\NormalTok{(myfile2, }\AttributeTok{sheetName=}\StringTok{"2017"}\NormalTok{)}
+\NormalTok{ATL2018Weatherdata }\OtherTok{\textless{}{-}} \FunctionTok{read.xlsx2}\NormalTok{(myfile2, }\AttributeTok{sheetName=}\StringTok{"2018"}\NormalTok{)}
+\NormalTok{ATL2019Weatherdata }\OtherTok{\textless{}{-}} \FunctionTok{read.xlsx2}\NormalTok{(myfile2, }\AttributeTok{sheetName=}\StringTok{"2019"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+After importing the data from excel files next we will merge the Weather
+Data and Attendance data in the yearly data. Following that we then
+merge all the yearly data into a the total data. Finally we then remove
+all none home games due to those games being the ones not located in
+Atlanta
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ATL2019 }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(ATL2019Weatherdata, ATL2019Attendancedata, }\AttributeTok{by=} \StringTok{"Date"}\NormalTok{)}
+\NormalTok{ATL2018 }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(ATL2018Weatherdata, ATL2018Attendancedata, }\AttributeTok{by=} \StringTok{"Date"}\NormalTok{)}
+\NormalTok{ATL2017 }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(ATL2017Weatherdata, ATL2017Attendancedata, }\AttributeTok{by=} \StringTok{"Date"}\NormalTok{)}
+\NormalTok{ATL }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(ATL2019, ATL2018, ATL2017)}
+\FunctionTok{names}\NormalTok{(ATL) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Date"}\NormalTok{, }\StringTok{"MaxTemp"}\NormalTok{, }\StringTok{"AvgTemp"}\NormalTok{, }\StringTok{"MinTemp"}\NormalTok{, }\StringTok{"MaxDewPoint"}\NormalTok{, }\StringTok{"AvgDewPoint"}\NormalTok{, }\StringTok{"MinDewPoint"}\NormalTok{, }\StringTok{"MaxHumidity"}\NormalTok{, }\StringTok{"AvgHumidity"}\NormalTok{, }\StringTok{"MinHumidity"}\NormalTok{, }\StringTok{"MaxWindSpeed"}\NormalTok{, }\StringTok{"AvgWindSpeed"}\NormalTok{, }\StringTok{"MinWindSpeed"}\NormalTok{, }\StringTok{"TotalPrecipitation"}\NormalTok{, }\StringTok{"Game"}\NormalTok{, }\StringTok{"X"}\NormalTok{, }\StringTok{"Team"}\NormalTok{, }\StringTok{"Away"}\NormalTok{, }\StringTok{"Opp"}\NormalTok{, }\StringTok{"Attendance"}\NormalTok{)}
+\NormalTok{ATLHome }\OtherTok{\textless{}{-}}\NormalTok{ ATL[}\SpecialCharTok{!}\NormalTok{(ATL}\SpecialCharTok{$}\NormalTok{Away}\SpecialCharTok{==}\DecValTok{1}\NormalTok{),]}
+\NormalTok{i }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{11}\NormalTok{,}\DecValTok{12}\NormalTok{,}\DecValTok{13}\NormalTok{,}\DecValTok{14}\NormalTok{,}\DecValTok{20}\NormalTok{)}
+\NormalTok{ATLHome[ , i] }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(ATLHome[ , i], }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(x)))}
+\end{Highlighting}
+\end{Shaded}
+
+After all the data cleaning is done here is what the data set currently
+looks like
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{stargazer}\NormalTok{(ATLHome, }\AttributeTok{type =} \StringTok{\textquotesingle{}html\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Statistic
+
+N
+
+Mean
+
+St.~Dev.
+
+Min
+
+Pctl(25)
+
+Pctl(75)
+
+Max
+
+MaxTemp
+
+243
+
+84.634
+
+7.313
+
+53
+
+80
+
+90
+
+99
+
+AvgTemp
+
+243
+
+75.392
+
+7.040
+
+43.100
+
+72.250
+
+80.100
+
+87.500
+
+MinTemp
+
+243
+
+67.416
+
+7.863
+
+36
+
+65
+
+72
+
+78
+
+MaxDewPoint
+
+243
+
+66.593
+
+8.039
+
+26
+
+64
+
+72
+
+76
+
+AvgDewPoint
+
+243
+
+62.935
+
+8.959
+
+23.100
+
+59.550
+
+69.150
+
+73.000
+
+MinDewPoint
+
+243
+
+58.802
+
+10.459
+
+21
+
+54.5
+
+67
+
+71
+
+MaxHumidity
+
+243
+
+86.733
+
+8.870
+
+55
+
+82
+
+93
+
+100
+
+AvgHumidity
+
+243
+
+67.824
+
+11.953
+
+37.500
+
+58.800
+
+76.950
+
+96.000
+
+MinHumidity
+
+243
+
+46.539
+
+12.815
+
+17
+
+38
+
+54
+
+84
+
+MaxWindSpeed
+
+243
+
+14.551
+
+5.176
+
+6
+
+12
+
+16
+
+40
+
+AvgWindSpeed
+
+243
+
+7.429
+
+2.622
+
+2
+
+5.6
+
+8.7
+
+20
+
+MinWindSpeed
+
+243
+
+1.749
+
+2.638
+
+0
+
+0
+
+3
+
+15
+
+TotalPrecipitation
+
+243
+
+0.142
+
+0.379
+
+0
+
+0
+
+0.1
+
+3
+
+Attendance
+
+243
+
+31,752.890
+
+7,177.981
+
+16,049
+
+25,145
+
+37,871
+
+43,619
+
+\hypertarget{methodology}{%
+\subsection{Methodology}\label{methodology}}
+
+Now that the data is cleaned we can begin the linear regression analysis
+in this project. First we create a linear regression model using the lm
+function which contains all the variables we will be using in the model
+for testing. Then we use the vif function to check for multicollinearity
+using the vif function from the car package. Our goal is to get every
+variable to have less than a value of 10.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{AttendanceRegression }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Attendance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MaxTemp }\SpecialCharTok{+}\NormalTok{ AvgTemp }\SpecialCharTok{+}\NormalTok{ MinTemp }\SpecialCharTok{+} 
+\NormalTok{MaxDewPoint }\SpecialCharTok{+}\NormalTok{ AvgDewPoint }\SpecialCharTok{+}\NormalTok{ MinDewPoint }\SpecialCharTok{+} 
+\NormalTok{MaxHumidity }\SpecialCharTok{+}\NormalTok{ AvgHumidity }\SpecialCharTok{+}\NormalTok{ MinHumidity }\SpecialCharTok{+} 
+\NormalTok{MaxWindSpeed }\SpecialCharTok{+}\NormalTok{ AvgWindSpeed }\SpecialCharTok{+}\NormalTok{ MinWindSpeed }\SpecialCharTok{+}\NormalTok{ TotalPrecipitation, }\AttributeTok{data =}\NormalTok{ ATLHome)}
+\FunctionTok{vif}\NormalTok{(AttendanceRegression)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            MaxTemp            AvgTemp            MinTemp        MaxDewPoint 
+##          32.226059         255.808091          34.800739          39.337054 
+##        AvgDewPoint        MinDewPoint        MaxHumidity        AvgHumidity 
+##         386.742825          34.872750           8.476051         124.091444 
+##        MinHumidity       MaxWindSpeed       AvgWindSpeed       MinWindSpeed 
+##          18.327854           2.313665           6.055700           3.703357 
+## TotalPrecipitation 
+##           1.361271
+\end{verbatim}
+
+Now we remove the variables will a high multicollinearity due to the
+interconnectedness between the variables. For the first round of removal
+we will be removing AvgTemp AvgDewPoint and AvgHumidity
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{AttendanceRegression }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Attendance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MaxTemp }\SpecialCharTok{+}\NormalTok{ MinTemp }\SpecialCharTok{+}\NormalTok{ MaxDewPoint }\SpecialCharTok{+}\NormalTok{ MinDewPoint }\SpecialCharTok{+}\NormalTok{ MaxHumidity }\SpecialCharTok{+}\NormalTok{ MinHumidity }\SpecialCharTok{+}\NormalTok{ MaxWindSpeed }\SpecialCharTok{+}\NormalTok{ AvgWindSpeed }\SpecialCharTok{+}\NormalTok{ MinWindSpeed }\SpecialCharTok{+}\NormalTok{ TotalPrecipitation, }\AttributeTok{data =}\NormalTok{ ATLHome)}
+\FunctionTok{vif}\NormalTok{(AttendanceRegression)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            MaxTemp            MinTemp        MaxDewPoint        MinDewPoint 
+##          16.739677          15.206244          19.233502          23.336592 
+##        MaxHumidity        MinHumidity       MaxWindSpeed       AvgWindSpeed 
+##           4.706081          12.122967           2.107162           5.969236 
+##       MinWindSpeed TotalPrecipitation 
+##           3.687330           1.245022
+\end{verbatim}
+
+Next we remove the variable with the highest value still left which is
+MinDewPoint
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{AttendanceRegression }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Attendance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MaxTemp }\SpecialCharTok{+}\NormalTok{ MinTemp }\SpecialCharTok{+}\NormalTok{ MaxDewPoint }\SpecialCharTok{+}\NormalTok{ MaxHumidity }\SpecialCharTok{+}\NormalTok{ MinHumidity }\SpecialCharTok{+}\NormalTok{ MaxWindSpeed }\SpecialCharTok{+}\NormalTok{ AvgWindSpeed }\SpecialCharTok{+}\NormalTok{ MinWindSpeed }\SpecialCharTok{+}\NormalTok{ TotalPrecipitation, }\AttributeTok{data =}\NormalTok{ ATLHome)}
+\FunctionTok{vif}\NormalTok{(AttendanceRegression)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            MaxTemp            MinTemp        MaxDewPoint        MaxHumidity 
+##           9.936532          10.639175          17.570762           3.901923 
+##        MinHumidity       MaxWindSpeed       AvgWindSpeed       MinWindSpeed 
+##           4.314822           2.091700           5.888557           3.655344 
+## TotalPrecipitation 
+##           1.244079
+\end{verbatim}
+
+Finally we remove MaxDewPoint which has a value still above 10
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{AttendanceRegression }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Attendance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MaxTemp }\SpecialCharTok{+}\NormalTok{ MinTemp }\SpecialCharTok{+}\NormalTok{ MaxHumidity }\SpecialCharTok{+}\NormalTok{ MinHumidity }\SpecialCharTok{+}\NormalTok{ MaxWindSpeed }\SpecialCharTok{+}\NormalTok{ AvgWindSpeed }\SpecialCharTok{+}\NormalTok{ MinWindSpeed }\SpecialCharTok{+}\NormalTok{ TotalPrecipitation, }\AttributeTok{data =}\NormalTok{ ATLHome)}
+\FunctionTok{vif}\NormalTok{(AttendanceRegression)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            MaxTemp            MinTemp        MaxHumidity        MinHumidity 
+##           7.161299           7.162586           1.867367           3.382237 
+##       MaxWindSpeed       AvgWindSpeed       MinWindSpeed TotalPrecipitation 
+##           2.091438           5.769957           3.653226           1.243736
+\end{verbatim}
+
+Now that every variable has a value less than 10 we are able to continue
+to view the results of the regression analysis
+
+\hypertarget{results}{%
+\subsection{Results}\label{results}}
+
+Down below is the results of the linear regression analysis
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(AttendanceRegression)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Attendance ~ MaxTemp + MinTemp + MaxHumidity + MinHumidity + 
+##     MaxWindSpeed + AvgWindSpeed + MinWindSpeed + TotalPrecipitation, 
+##     data = ATLHome)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -16892.9  -6185.9    694.9   6054.1  12157.1 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)        35465.5109  9832.0558   3.607 0.000378 ***
+## MaxTemp             -266.2004   166.2518  -1.601 0.110684    
+## MinTemp              382.2749   154.6318   2.472 0.014142 *  
+## MaxHumidity            0.7885    69.9891   0.011 0.991021    
+## MinHumidity         -158.0658    65.1974  -2.424 0.016092 *  
+## MaxWindSpeed         170.1545   126.9234   1.341 0.181348    
+## AvgWindSpeed        -333.7594   416.2042  -0.802 0.423417    
+## MinWindSpeed         291.7903   329.1940   0.886 0.376324    
+## TotalPrecipitation -1225.0779  1338.1006  -0.916 0.360853    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7067 on 234 degrees of freedom
+## Multiple R-squared:  0.06269,    Adjusted R-squared:  0.03064 
+## F-statistic: 1.956 on 8 and 234 DF,  p-value: 0.05284
+\end{verbatim}
+
+The first thing to look at is the Multiple R-Squared which is just 0.063
+which means that the weather variables explains only 6.3\% of the
+variance in attendance. Next is we look at the two variables that are
+significant on the 0.01 level which is MinTemp which means that for
+every 1 degree Fahrenheit increase of minimum temperature the amount of
+people attending will increase by 382 people. Another significant
+variable is MinHumidity which means for every 1\% increase in the
+Humidity level the amount of people in attendance will decrease by 158.
+There are a lot of non-significant results in this model however that
+does not mean that the factors do or do not affect attendance it simply
+means that the model could not conclude that the factors have an affect
+on weather.
+
+\hypertarget{implications}{%
+\subsection{Implications}\label{implications}}
+
+The implications of this project means that more research will be needed
+to conclude if weather does have an affect attendance due to the high
+amount of non significant results and the low multiple R-Squared.
+
+\hypertarget{conclusions}{%
+\subsection{Conclusions}\label{conclusions}}
+
+The conclusion from this research project is that we were unable to
+determine whether weather has a significant affect on attendance towards
+MLB games. The two variables MinTemp and MinHumidity however did seem to
+have a significant affect on attendance while the Model as a whole did
+not.
+
+\hypertarget{references}{%
+\subsection{References}\label{references}}
+
+Atlanta, GA Weather History \textbar{} Weather Underground.
+Wunderground.com. (2021).
+\url{https://www.wunderground.com/history/monthly/KATL/date/2019-4}.
+
+2019 Atlanta Braves Schedule. Baseball Reference. (2021).
+\url{https://www.baseball-reference.com/teams/ATL/2019-schedule-scores.shtml}.
+
+Ge, Q., Humphreys, B. R., \& Zhou, K. (2020). Are fair weather fans
+affected by weather? Rainfall, habit formation, and live game
+attendance. Journal of Sports Economics, 21(3), 304-322.
+
+\end{document}
